@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>User Data</h2>
+    <div *ngIf="errorMessage" >
+        <div class="bs-example">
+            <div class="alert alert-success fade in">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                <strong>Success!</strong> {{errorMessage}}
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
+
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" #refName class="form-control" formControlName="name">
+            <div *ngIf="userForm.controls['name'].hasError('required')" class="alert alert-danger">
+                Please enter a name.
+            </div>
+            <div *ngIf="userForm.controls['name'].hasError('minlength')" class="alert alert-danger">
+                Name needs to be atleast 3 characters long.
+            </div>
+            <div *ngIf="userForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
+                Name cannot exceed 40 characters.
+            </div>
+            <label>Email:</label>
+            <input type="text" class="form-control" formControlName="email">
+                <label>Street:</label>
+                <input type="text" class="form-control" formControlName="street">
+                <label>City:</label>
+                <input type="text" class="form-control" formControlName="city">
+                <label>Postal Code:</label>
+                <input type="text" class="form-control" formControlName="postalcode">
+                <div *ngIf="userForm.controls['address'].controls['postalcode'].hasError('pattern')" class="alert alert-danger">
+                    Invalid format.
+                </div>
+        </div>
+
+        <button type="submit" [disabled]="!userForm.valid" class="btn btn-primary">Submit</button>
+    </form>
+</div>
